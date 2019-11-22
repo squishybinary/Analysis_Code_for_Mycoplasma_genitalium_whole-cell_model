@@ -1,5 +1,5 @@
 # Analysis Code for Mycoplasma genitalium whole-cell model
-Matlab scripts that produce an automated analysis of M.genitalium whole-cell model simulations, when run on using bash script locally / on supercomputer clusters.
+Matlab scripts that produce an automated analysis of M.genitalium whole-cell model simulations, when run on using bash script locally / on supercomputer clusters. MGGRunner.m is our version of SimulationRunner.m. It is designed for use with supercomputers that start hundreds of simulations simultaneously, artificially incrementing the time-date value for each simulation, as this value is subsequently used to create the initial conditions of the simulation. This incrementation prevents the running of multiple simulations with identical initial conditions.
 
 - Upload runGraphs.m, compareGraphs.m, WildTypeBackground.fig, MGGrunner.m from UPLOAD_to_supercomputer folder to locations indicated in structure
 - Upload generated simulation files (*.sh, *_ko.list, *_exp.list) to location indicated in structure
