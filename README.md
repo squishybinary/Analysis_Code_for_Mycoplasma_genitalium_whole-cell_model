@@ -1,7 +1,7 @@
 # Analysis Code for Mycoplasma genitalium whole-cell model
-September 2020 - runGraphs.m has been updated, based on suggestions from Viva Examiners. 
+*September 2020 - runGraphs.m has been updated, based on suggestions from Viva Examiners. 
 This change added Protein and RNA starting and ending values, and assigned a score to both (UP or DOWN), to the output (endtimes.txt). 
-The cell now has to divide and have two UP scores (i.e. produce both protein and RNA during the cell cyle).
+The cell now has to divide and have two UP scores (i.e. produce both protein and RNA during the cell cyle).*
 
 Matlab scripts that produce an automated analysis of M.genitalium whole-cell model simulations, when run on using bash script locally / on supercomputer clusters. MGGRunner.m is our version of SimulationRunner.m. It is designed for use with supercomputers that start hundreds of simulations simultaneously, artificially incrementing the time-date value for each simulation, as this value is subsequently used to create the initial conditions of the simulation. This incrementation prevents the running of multiple simulations with identical initial conditions. 
 
