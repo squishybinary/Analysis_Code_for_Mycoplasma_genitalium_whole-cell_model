@@ -121,17 +121,17 @@ title('Mass','FontSize',12);
 %title('Terminal Organelle Protein','FontSize',12); %Protein in Terminal Organelle
 
 % Prediction and N of Deletions and Gene Codes
-maxtime = max(time);
-celldiameterstartvalue = max(septum);
-celldiameterfinalvalue = min(septum);
-startchromosome = min(chromosome);
-endchromosome = max(chromosome);
-startgrowth = min(growth);
-endgrowth = max(growth);
-startprotein = min(cytosolprotein);
-endprotein = max(cytosolprotein);
-startrna = min(rna);
-endrna = max(rna);
+maxtime = time(end,:);
+celldiameterstartvalue = septum(1,:);
+celldiameterfinalvalue = septum(end,:);
+startchromosome = chromosome(1,:);
+endchromosome = chromosome(end,:);
+startgrowth = growth(1,:);
+endgrowth = growth(end,:);
+startprotein = cytosolprotein(1,:);
+endprotein = cytosolprotein(end,:);
+startrna = rna(1,:);
+endrna = rna(end,:);
 
 if maxtime > 5 & maxtime < 13.88
 	predictionprefix = 'Divided';
@@ -152,7 +152,6 @@ end
 
 % predictionprefix and suffix flipped on next line - to make regex capture comparison easier (Divided vs NoDivision)
 prediction = [predictionsuffix predictionprefix];
-%...........................ENHANCE with Mutant Background
 
 koprefix = '/home/jr0904/BlueGem/KOLists/';
 kosuffix = '_ko.list';
@@ -223,14 +222,36 @@ endtimessuffix = 'ndtimes.txt';
 lowercaseE = 'e'
 simint = str2num(simname);
 %maxtimeint = str2num(maxtime);
-results = [simint, maxtime];
+
+if endprotein > startprotein
+	outcomeone = 'UP';
+elseif endprotein < startprotein
+	outcomeone = 'DOWN'
+else 
+	outcomeone = 'Unknown';
+end	
+
+if endrna > startrna
+	outcometwo = ' UP ';
+elseif endrna < startrna
+	outcometwo = ' DOWN '
+else 
+	outcometwo = ' Unknown ';
+end	
+
+protein = [startprotein endprotein];
+rna = [startrna endrna];
+outcomes = [outcomeone outcometwo];
+numbers = [simint maxtime protein rna];
+letters = [outcomes prediction];
+
 filename = [endtimesprefix experimentname underscore simname underscore lowercaseE endtimessuffix];
 filename2 = [endtimesprefix endtimename endtimessuffix];
 
-dlmwrite(filename,results,'-append','delimiter','\t','precision',4);
-dlmwrite(filename,prediction,'-append','delimiter','');
-dlmwrite(filename2,results,'-append','delimiter','\t','precision',4);
-dlmwrite(filename2,prediction,'-append','delimiter','');
+dlmwrite(filename,numbers,'-append','delimiter','\t','precision',4);
+dlmwrite(filename,letters,'-append','delimiter','');
+dlmwrite(filename2,numbers,'-append','delimiter','\t','precision',4);
+dlmwrite(filename2,letters,'-append','delimiter','');
 
 %%% Archived
 % > DNA switched for Chromsome
